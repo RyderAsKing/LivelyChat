@@ -1,11 +1,11 @@
 # LivelyChat 💬
 
-**A modern, Instagram-inspired real-time chat application built with Laravel 11, Inertia.js, React, and Laravel Reverb.**
+**A modern, Instagram-inspired real-time chat application built with Laravel 12, Inertia.js, React, and Laravel Reverb.**
 
 LivelyChat is a full-featured messaging platform that demonstrates the power of modern web technologies working together. With WebSocket-powered real-time messaging, beautiful UI components, and a robust backend, it's perfect for learning, extending, or integrating into your own projects.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel)
+![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
 ![Reverb](https://img.shields.io/badge/Reverb-WebSockets-orange)
@@ -22,7 +22,7 @@ LivelyChat is a full-featured messaging platform that demonstrates the power of 
 - 🔍 **User Search** - Find and start conversations with any user
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
 - 🛡️ **Type-Safe** - Full TypeScript support for better developer experience
-- 🚀 **Production Ready** - Built on Laravel 11 with best practices
+- 🚀 **Production Ready** - Built on Laravel 12 with best practices
 
 ---
 
@@ -30,7 +30,7 @@ LivelyChat is a full-featured messaging platform that demonstrates the power of 
 
 **LivelyChat - Real-time Chat Application**
 
-A production-ready, Instagram-style messaging platform built with Laravel 11, React 19, and Laravel Reverb. Features WebSocket-powered real-time messaging, read receipts, user search, and a beautiful responsive UI. Perfect for learning modern full-stack development or as a foundation for your chat features.
+A production-ready, Instagram-style messaging platform built with Laravel 12, React 19, and Laravel Reverb. Features WebSocket-powered real-time messaging, read receipts, user search, and a beautiful responsive UI. Perfect for learning modern full-stack development or as a foundation for your chat features.
 
 **Tech Stack:** Laravel • Inertia.js • React • TypeScript • Tailwind CSS • Laravel Reverb • MySQL
 
@@ -107,7 +107,7 @@ LivelyChat follows a modern full-stack architecture:
 ```
 Frontend (React + TypeScript)
          ↕ (Inertia.js Bridge)
-Backend (Laravel 11 Controllers)
+Backend (Laravel 12 Controllers)
          ↕ (Eloquent ORM)
 Database (MySQL)
          +
@@ -124,7 +124,7 @@ For detailed architecture diagrams, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ### Backend
 
-- **Laravel 11** - Modern PHP framework
+- **Laravel 12** - Modern PHP framework
 - **Laravel Reverb** - Official WebSocket server
 - **Spatie Laravel Permission** - Role-based access control
 - **MySQL/MariaDB** - Relational database
@@ -325,9 +325,9 @@ Potential features to add:
 
 ### External Resources
 
-- [Laravel 11 Documentation](https://laravel.com/docs/11.x)
-- [Laravel Reverb Documentation](https://laravel.com/docs/11.x/reverb)
-- [Laravel Echo Documentation](https://laravel.com/docs/11.x/broadcasting#client-side-installation)
+- [Laravel 12 Documentation](https://laravel.com/docs/12.x)
+- [Laravel Reverb Documentation](https://laravel.com/docs/12.x/reverb)
+- [Laravel Echo Documentation](https://laravel.com/docs/12.x/broadcasting#client-side-installation)
 - [Inertia.js Documentation](https://inertiajs.com/)
 - [ShadCN UI Components](https://ui.shadcn.com/)
 
