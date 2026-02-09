@@ -40,7 +40,7 @@ export default function Authenticated({
 
     useEffect(() => {
         const viewport = scrollViewportRef.current?.querySelector(
-            "[data-radix-scroll-area-viewport]"
+            "[data-radix-scroll-area-viewport]",
         );
         if (viewport) {
             viewport.scrollTop = 0;
@@ -90,7 +90,7 @@ export default function Authenticated({
                     </div>
                 </header>
                 <ScrollArea className="flex-1" ref={scrollViewportRef}>
-                    <main className="p-4">{children}</main>
+                    <main>{children}</main>
                 </ScrollArea>
             </SidebarInset>
             <Toaster />

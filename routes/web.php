@@ -21,3 +21,6 @@ require __DIR__ . '/user.php';
 
 // Admin
 require __DIR__ . '/admin.php';
+
+// Chat
+require __DIR__ . '/chat.php';

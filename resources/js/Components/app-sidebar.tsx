@@ -8,6 +8,7 @@ import {
     BarChart3,
     Mail,
     Shield,
+    MessageCircle,
 } from "lucide-react";
 import { Link } from "@inertiajs/react";
 
@@ -35,6 +36,12 @@ const navigation = [
         isActive: route().current("dashboard"),
     },
     {
+        title: "Chat",
+        url: route("chat.index"),
+        icon: MessageCircle,
+        isActive: route().current("chat.*"),
+    },
+    {
         title: "Settings",
         url: route("profile.edit"),
         icon: Settings2,
@@ -56,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const filteredNavigation = navigation.filter(
         (item) =>
             !item.viewBy ||
-            auth.user.roles.some((role) => role.name === item.viewBy)
+            auth.user.roles.some((role) => role.name === item.viewBy),
     );
 
     return (
