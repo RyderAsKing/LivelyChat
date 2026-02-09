@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserTyping;
 use App\Models\Conversation;
 use App\Services\ChatService;
 use Illuminate\Http\Request;
@@ -141,5 +142,22 @@ class ChatController extends Controller
         $this->chatService->markConversationAsRead($conversation, $user);
 
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Broadcast typing indicator.
+     */
+    public function typing(Request $request, Conversation $conversation)
+    {
+        $user = $request->user();
+
+        // Ensure the user is part of this conversation
+        if (!$this->chatService->verifyUserInConversation($conversation, $user)) {
+            abort(403);
+        }
+
+        broadcast(new UserTyping($conversation->id, $user));
+
+        return response()->json(['status' => 'typing']);
     }
 }

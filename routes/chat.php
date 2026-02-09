@@ -10,4 +10,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/chat/search-users', [ChatController::class, 'searchUsers'])->name('chat.search-users');
     Route::post('/chat/start-conversation', [ChatController::class, 'startConversation'])->name('chat.start-conversation');
     Route::post('/chat/{conversation}/mark-as-read', [ChatController::class, 'markAsRead'])->name('chat.mark-as-read');
+    Route::post('/chat/{conversation}/typing', [ChatController::class, 'typing'])->name('chat.typing');
 });

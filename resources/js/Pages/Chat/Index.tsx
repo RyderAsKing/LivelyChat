@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Input } from "@/Components/ui/input";
@@ -30,12 +30,68 @@ interface ChatIndexProps {
     conversations: Conversation[];
 }
 
-function Index({ conversations }: ChatIndexProps) {
+function Index({ conversations: initialConversations }: ChatIndexProps) {
     const { auth } = usePage().props as any;
+    const [conversations, setConversations] =
+        useState<Conversation[]>(initialConversations);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<User[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const searchTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+
+    // Listen for real-time messages to update conversation list
+    useEffect(() => {
+        if (window.Echo) {
+            const channel = window.Echo.private(`chat.${auth.user.id}`);
+
+            channel.listen(".message.sent", (e: any) => {
+                // Update the conversation list with new message
+                setConversations((prevConversations) => {
+                    const updatedConversations = prevConversations.map(
+                        (conv) => {
+                            if (conv.id === e.conversation_id) {
+                                return {
+                                    ...conv,
+                                    last_message: {
+                                        body: e.body,
+                                        created_at: new Date(
+                                            e.created_at,
+                                        ).toLocaleTimeString("en-US", {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        }),
+                                        is_mine: e.sender_id === auth.user.id,
+                                    },
+                                    last_message_at: e.created_at,
+                                    // Increment unread count if message is not from current user
+                                    unread_count:
+                                        e.sender_id === auth.user.id
+                                            ? conv.unread_count
+                                            : (conv.unread_count ?? 0) + 1,
+                                };
+                            }
+                            return conv;
+                        },
+                    );
+
+                    // Sort by most recent message
+                    return updatedConversations.sort((a, b) => {
+                        const dateA = a.last_message_at
+                            ? new Date(a.last_message_at).getTime()
+                            : 0;
+                        const dateB = b.last_message_at
+                            ? new Date(b.last_message_at).getTime()
+                            : 0;
+                        return dateB - dateA;
+                    });
+                });
+            });
+
+            return () => {
+                channel.stopListening(".message.sent");
+            };
+        }
+    }, [auth.user.id]);
 
     const handleSearch = async (query: string) => {
         setSearchQuery(query);

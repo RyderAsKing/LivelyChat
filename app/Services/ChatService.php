@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\MessageRead;
 use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Message;
@@ -73,6 +74,7 @@ class ChatService
             'id' => $message->id,
             'body' => $message->body,
             'is_mine' => $message->sender_id === $user->id,
+            'is_read' => $message->is_read,
             'sender' => [
                 'id' => $message->sender->id,
                 'name' => $message->sender->name,
@@ -98,10 +100,22 @@ class ChatService
      */
     public function markConversationAsRead(Conversation $conversation, User $user): int
     {
-        return Message::where('conversation_id', $conversation->id)
+        $messageIds = Message::where('conversation_id', $conversation->id)
             ->where('receiver_id', $user->id)
             ->where('is_read', false)
-            ->update(['is_read' => true]);
+            ->pluck('id')
+            ->toArray();
+
+        if (empty($messageIds)) {
+            return 0;
+        }
+
+        $count = Message::whereIn('id', $messageIds)->update(['is_read' => true]);
+
+        // Broadcast read receipt to the conversation channel
+        broadcast(new MessageRead($conversation->id, $messageIds, $user->id));
+
+        return $count;
     }
 
     /**
